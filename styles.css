@@ -30,9 +30,65 @@ button {
     border: none;
     color: #fff;
     letter-spacing: 1px;
+    width: 300px;
+    height: 60px;
 }
 
 button:disabled {
     background-color: rgba(227,26,129, 0.5);
     cursor: not-allowed;
+}
+
+.form-group {
+    width: 250px;
+    margin-bottom: 8px;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.settings {
+    padding: 20px 30px 60px;
+}
+
+input:not([type=checkbox]) {
+    width: 100%;
+    padding: 6px 9px;
+    font-size: 14px;
+    border: 1px solid var(--text);
+    border-radius: 0;
+}
+
+label {
+    font-size: 14px;
+}
+
+.form-group:last-of-type {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+input[type=submit] {
+    padding: 12px 18px;
+    font-size: 12px;
+    text-transform: uppercase;
+    background: #12166d;
+    border: none;
+    color: #fff;
+    letter-spacing: 1px;
+    width: 120px;
+}
+
+input[type=submit]:disabled {
+    background-color: rgba(18, 22, 109, 0.5);
+}
+
+@media screen and (max-width: 600px) {
+    .runs {
+        font-size: 5em;
+    }
 }
