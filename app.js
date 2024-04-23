@@ -10,7 +10,7 @@ const APP_DATA = {
     DIFF_RUNS: 0.125,
     TOTAL_RUNS: 0,
     ARR_RUNS: [],
-    AUDIO: new Audio('whistleAndSpeak.wav'),
+    AUDIO: new Audio('whistle.wav'),
     SPEECH: null,
     VOICE: null
 };
