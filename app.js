@@ -10,12 +10,15 @@ const APP_DATA = {
     DIFF_RUNS: 0.125,
     TOTAL_RUNS: 0,
     ARR_RUNS: [],
-    AUDIO: new Audio('whistle.wav')
+    AUDIO: new Audio('whistleAndSpeak.wav'),
+    SPEECH: null,
+    VOICE: null
 };
 
 // METHODS
 // init
 const init = () => {
+    initSpeech();
     showChaseTotal();
     generateRunsArray();
     initRunChaseApp();
@@ -31,11 +34,15 @@ const initRunChaseApp = () => {
 } 
 // END initRunChaseApp
 
-// whistle
-const whistle = () => {
+// whistleAndSpeak
+const whistleAndSpeak = (currentRun) => {
     APP_DATA.AUDIO.play();
+
+    setTimeout(() => {
+        speak(currentRun + ' run' + (currentRun == 1 ? '' : 's'));
+    }, 700);
 }
-// END whistle
+// END whistleAndSpeak
 
 // showChaseTotal
 const showChaseTotal = () => {
@@ -64,7 +71,7 @@ const handleRuns = (index) => {
         return;
     }
     
-    whistle();
+    whistleAndSpeak(currentRun);
 
     let run_timeout = setTimeout(() => {
         handleRuns(index + 1);
@@ -99,6 +106,46 @@ const generateRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 // END generateRandomNumber
+
+const speak = (text) => {
+    // creates the content of the speech
+    // output holds the text to speak
+    let output = new SpeechSynthesisUtterance(text);
+
+    // set the voice to myVoice
+    output.voice = APP_DATA.VOICE;
+
+    // say the text
+    APP_DATA.SPEECH.speak(output);
+}
+
+// initSpeech
+const initSpeech = () => {
+    // create a speechSynthesis reference
+    let speech = window.speechSynthesis;
+
+    // get all voices
+    let voices = speech.getVoices();
+
+    // english voices
+    let english = [];
+    for (let i = 0; i < voices.length; i++) {
+        let v = voices[i].voiceURI;
+
+        // check for English language
+        if (v.indexOf('English') !== -1) {
+            english.push(voices[i]);
+            break;
+        }
+    }
+
+    // get a voice
+    //taking the first one available at index 0
+    APP_DATA.VOICE = english[0];
+
+    APP_DATA.SPEECH = speech;
+}
+// END initSpeech
 
 // EVENT LISTENERS
 document.addEventListener('DOMContentLoaded', init);
