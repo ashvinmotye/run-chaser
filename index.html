@@ -20,6 +20,69 @@
 
             <button id="start-run-chase">Start</button>
         </div>
+
+        <!-- 
+            max number of runs
+            time for single run
+            time for rest after a set
+            enable voice for runs
+         -->
+
+        <div class="settings">
+            <form id="form-settings">
+                <div class="form-group">
+                    <label for="inp-runs-total">Total number of runs</label>
+                    <br>
+                    <input
+                        type="number" 
+                        name="inp-runs-total"
+                        id="inp-runs-total"
+                        step="1"
+                        min="0"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="inp-time-run">Time for one run</label>
+                    <br>
+                    <input 
+                        type="number"
+                        name="inp-time-run"
+                        id="inp-time-run"
+                        step="1"
+                        min="3"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="inp-time-rest">Time for rest between sets</label>
+                    <br>
+                    <input 
+                        type="number"
+                        name="inp-time-rest"
+                        id="inp-time-rest"
+                        step="1"
+                        min="3"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <input
+                        type="checkbox"
+                        name="inp-enable-voice"
+                        id="inp-enable-voice"
+                    >
+                    <label for="inp-enable-voice">Enable run announcer</label>
+                </div>
+
+                <input 
+                    type="submit"
+                    value="Save"
+                    name="inp-submit"
+                    id="inp-submit"
+                >
+            </form>
+        </div>
     </div>
     
     <script src="./app.js"></script>

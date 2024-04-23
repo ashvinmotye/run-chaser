@@ -15,24 +15,59 @@ const APP_DATA = {
     SPEECH: null,
     VOICE: null,
     SESSION_COMPLETE: 'Good work! Session completed!',
-    COMPLETE_TEXT: 'COMPLETE!'
+    COMPLETE_TEXT: 'COMPLETE!',
+    ENABLE_VOICE: true
 };
 
 // METHODS
 // init
 const init = () => {
     initSpeech();
+    initRunTotal();
     showChaseTotal();
     generateRunsArray();
+    initSettingsForm();
     initRunChaseApp();
 }
 // END init
+
+// initSettingsForm
+const initSettingsForm = () => {
+    const elForm = document.querySelector('#form-settings');
+    const elRunsTotal = document.querySelector('#inp-runs-total');
+    const elTimeRun = document.querySelector('#inp-time-run');
+    const elTimeRest = document.querySelector('#inp-time-rest');
+    const elEnableVoice = document.querySelector('#inp-enable-voice');
+
+    // Initialise values into form elements
+    elRunsTotal.value = APP_DATA.TOTAL_RUNS;
+    elTimeRun.value = APP_DATA.TIME_RUN;
+    elTimeRest.value = APP_DATA.TIME_REST;
+    elEnableVoice.checked = APP_DATA.ENABLE_VOICE;
+
+    // Submit form action
+    elForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        APP_DATA.TOTAL_RUNS = Number(elRunsTotal.value);
+        APP_DATA.MAX_RUNS = Number(elRunsTotal.value);
+        showChaseTotal();
+
+        APP_DATA.TIME_RUN = Number(elTimeRun.value);
+        APP_DATA.TIME_REST = Number(elTimeRest.value);
+        APP_DATA.ENABLE_VOICE = elEnableVoice.checked;
+
+        generateRunsArray();
+    });
+}
+// END initSettingsForm
 
 // initRunChaseApp
 const initRunChaseApp = () => {
     document.querySelector('#start-run-chase').addEventListener('click', event => {
         handleRuns(0);
         event.target.disabled = true;
+        document.querySelector('#inp-submit').disabled = true;
     });
 } 
 // END initRunChaseApp
@@ -47,9 +82,14 @@ const whistleAndSpeak = (currentRun) => {
 }
 // END whistleAndSpeak
 
+// initRunTotal
+const initRunTotal = () => {
+    APP_DATA.TOTAL_RUNS = generateRandomNumber(APP_DATA.MAX_RUNS - (APP_DATA.MAX_RUNS * APP_DATA.DIFF_RUNS), APP_DATA.MAX_RUNS);
+}
+// END initRunTotal
+
 // showChaseTotal
 const showChaseTotal = () => {
-    APP_DATA.TOTAL_RUNS = generateRandomNumber(APP_DATA.MAX_RUNS - (APP_DATA.MAX_RUNS * APP_DATA.DIFF_RUNS), APP_DATA.MAX_RUNS);
     document.querySelector('.chase').innerHTML = APP_DATA.TOTAL_RUNS;
 }
 // END showChaseTotal
@@ -117,7 +157,7 @@ const limitRunsArray = (array_runs) => {
         let surplus = temp_array.slice(max_length).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
         while(surplus != 0) {
-            let randomIndex = generateRandomNumber(0, max_length);
+            let randomIndex = generateRandomNumber(0, max_length - 1);
 
             if(max_array[randomIndex] != 6) {
                 max_array[randomIndex] = max_array[randomIndex] + 1;
@@ -138,6 +178,9 @@ const generateRandomNumber = (min, max) => {
 
 // speak
 const speak = (text) => {
+    if(!APP_DATA.ENABLE_VOICE) {
+        return;
+    }
     // creates the content of the speech
     // output holds the text to speak
     let output = new SpeechSynthesisUtterance(text);
