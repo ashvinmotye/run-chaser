@@ -3,33 +3,32 @@
  * @date 22 April 2024
  */
 
+const APP_DATA = {
+    TIME_RUN: 5,
+    TIME_REST: 5,
+    MAX_RUNS: 200,
+    DIFF_RUNS: 0.125,
+    TOTAL_RUNS: 0,
+    ARR_RUNS: []
+};
+
 // METHODS
 // init
 const init = () => {
-    const TIME_RUN = 5;
-    const TIME_REST = 5;
-    const MAX_RUNS = 200;
-    const DIFF_RUNS = 25;
-    const TOTAL_RUNS = generateRandomNumber(MAX_RUNS - DIFF_RUNS, MAX_RUNS);
-    showChaseTotal(TOTAL_RUNS);
-
-    const ARR_RUNS = generateRunsArray(TOTAL_RUNS);
-    // console.log('total time', (TOTAL_RUNS * TIME_RUN + (ARR_RUNS.length * TIME_REST)));
-    // console.log('total time', (TOTAL_RUNS * TIME_RUN + (ARR_RUNS.length * TIME_REST)) / 60);
-    // console.log('total time', (4 * TIME_RUN + (ARR_RUNS.length * TIME_REST)));
-
-    startRunChase(ARR_RUNS, TIME_RUN, TIME_REST);
+    showChaseTotal();
+    generateRunsArray();
+    initRunChaseApp();
 }
 // END init
 
-// startRunChase
-const startRunChase = (array_runs, time_run, time_rest) => {
+// initRunChaseApp
+const initRunChaseApp = () => {
     document.querySelector('#start-run-chase').addEventListener('click', event => {
-        handleRuns(array_runs, time_run, time_rest, 0);
+        handleRuns(0);
         event.target.disabled = true;
     });
 } 
-// END startRunChase
+// END initRunChaseApp
 
 // whistle
 const whistle = () => {
@@ -39,21 +38,22 @@ const whistle = () => {
 // END whistle
 
 // showChaseTotal
-const showChaseTotal = (total_runs) => {
-    document.querySelector('.chase').innerHTML = total_runs;
+const showChaseTotal = () => {
+    APP_DATA.TOTAL_RUNS = generateRandomNumber(APP_DATA.MAX_RUNS - (APP_DATA.MAX_RUNS * APP_DATA.DIFF_RUNS), APP_DATA.MAX_RUNS);
+    document.querySelector('.chase').innerHTML = APP_DATA.TOTAL_RUNS;
 }
 // END showChaseTotal
 
 // handleRuns
-const handleRuns = (array_runs, time_run, time_rest, index) => {
+const handleRuns = (index) => {
     const elCurrentRun = document.querySelector('.current-run');
     const elMyChaseTotal = document.querySelector('.my-chase');
 
-    let currentRun = array_runs[index];
-    let timeForRun = (currentRun * time_run) + time_rest;
-    let chaseTotal = array_runs.slice(0, index).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    let currentRun = APP_DATA.ARR_RUNS[index];
+    let timeForRun = (currentRun * APP_DATA.TIME_RUN) + APP_DATA.TIME_REST;
+    let chaseTotal = APP_DATA.ARR_RUNS.slice(0, index).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     
-    console.log(array_runs);
+    console.log(APP_DATA.ARR_RUNS);
     console.log(index, currentRun, timeForRun);
 
     elCurrentRun.textContent = currentRun;
@@ -67,14 +67,14 @@ const handleRuns = (array_runs, time_run, time_rest, index) => {
     whistle();
 
     let run_timeout = setTimeout(() => {
-        handleRuns(array_runs, time_run, time_rest, index + 1);
+        handleRuns(index + 1);
     }, timeForRun * 1000);
 }
 // END handleRuns
 
 // generateRunsArray
-const generateRunsArray = (runs) => {
-    let remaining = runs;
+const generateRunsArray = () => {
+    let remaining = APP_DATA.TOTAL_RUNS;
     let total = 0;
     let array_runs = [];
 
@@ -86,11 +86,11 @@ const generateRunsArray = (runs) => {
         remaining = remaining - run;
     }
 
-    if (total - runs > 0) {
-        array_runs[array_runs.length - 1] = array_runs[array_runs.length - 1] - (total - runs);
+    if (total - APP_DATA.TOTAL_RUNS > 0) {
+        array_runs[array_runs.length - 1] = array_runs[array_runs.length - 1] - (total - APP_DATA.TOTAL_RUNS);
     }
 
-    return array_runs;
+    APP_DATA.ARR_RUNS = array_runs;
 }
 // END generateRunsArray
 
