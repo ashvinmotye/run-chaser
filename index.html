@@ -11,22 +11,27 @@
 <body>
     <div class="container">
         <div class="runs">
-            <div class="current-run">0</div>
-            
             <div>
-                <span class="my-chase">0</span> /
-                <span class="chase"></span>
+                <span class="current-run">0</span>
+                <span class="ui-label">current runs</span>
+            </div>
+            
+            <div class="chase-block">
+                <p>
+                    <span class="my-chase">0</span>
+                    <span class="ui-label">completed</span>
+                </p>
+                <p>&nbsp;/&nbsp;</p>
+                <p>
+                    <span class="chase"></span>
+                    <span class="ui-label">chase total</span>
+                </p>
             </div>
 
-            <button id="start-run-chase">Start</button>
+            <div>
+                <button id="start-run-chase">Start</button>
+            </div>
         </div>
-
-        <!-- 
-            max number of runs
-            time for single run
-            time for rest after a set
-            enable voice for runs
-         -->
 
         <div class="settings">
             <form id="form-settings">

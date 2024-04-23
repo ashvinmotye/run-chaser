@@ -87,6 +87,23 @@ input[type=submit]:disabled {
     background-color: rgba(18, 22, 109, 0.5);
 }
 
+span.ui-label {
+    font-size: 12px;
+    display: block;
+    margin-top: -12px;
+    margin-bottom: 16px;
+    color: #a0a0a0;
+}
+
+.runs p {
+    display: inline-block;
+}
+
+.chase-block {
+    display: flex;
+    justify-content: center;
+}
+
 @media screen and (max-width: 600px) {
     .runs {
         font-size: 5em;
