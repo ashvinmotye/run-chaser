@@ -107,6 +107,7 @@ const generateRandomNumber = (min, max) => {
 }
 // END generateRandomNumber
 
+// speak
 const speak = (text) => {
     // creates the content of the speech
     // output holds the text to speak
@@ -118,6 +119,7 @@ const speak = (text) => {
     // say the text
     APP_DATA.SPEECH.speak(output);
 }
+// END speak
 
 // initSpeech
 const initSpeech = () => {
