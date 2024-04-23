@@ -6,19 +6,14 @@
 // METHODS
 // init
 const init = () => {
-    // console.log('init');
-
     const TIME_RUN = 5;
     const TIME_REST = 5;
     const MAX_RUNS = 200;
     const DIFF_RUNS = 25;
     const TOTAL_RUNS = generateRandomNumber(MAX_RUNS - DIFF_RUNS, MAX_RUNS);
-    // console.log(TOTAL_RUNS);
     showChaseTotal(TOTAL_RUNS);
 
     const ARR_RUNS = generateRunsArray(TOTAL_RUNS);
-    // ARR_RUNS = [1, 2, 1];
-    // console.log(ARR_RUNS);
     // console.log('total time', (TOTAL_RUNS * TIME_RUN + (ARR_RUNS.length * TIME_REST)));
     // console.log('total time', (TOTAL_RUNS * TIME_RUN + (ARR_RUNS.length * TIME_REST)) / 60);
     // console.log('total time', (4 * TIME_RUN + (ARR_RUNS.length * TIME_REST)));
@@ -27,14 +22,14 @@ const init = () => {
 }
 // END init
 
-//
+// startRunChase
 const startRunChase = (array_runs, time_run, time_rest) => {
     document.querySelector('#start-run-chase').addEventListener('click', event => {
         handleRuns(array_runs, time_run, time_rest, 0);
         event.target.disabled = true;
     });
 } 
-//
+// END startRunChase
 
 // whistle
 const whistle = () => {
@@ -63,12 +58,16 @@ const handleRuns = (array_runs, time_run, time_rest, index) => {
 
     elCurrentRun.textContent = currentRun;
     elMyChaseTotal.textContent = chaseTotal;
+
+    if(chaseTotal == Number(document.querySelector('.chase').textContent)) {
+        elCurrentRun.textContent = 'COMPLETE!';
+        return;
+    }
     
     whistle();
 
     let run_timeout = setTimeout(() => {
         handleRuns(array_runs, time_run, time_rest, index + 1);
-        // clearTimeout(run_timeout);
     }, timeForRun * 1000);
 }
 // END handleRuns
@@ -90,11 +89,6 @@ const generateRunsArray = (runs) => {
     if (total - runs > 0) {
         array_runs[array_runs.length - 1] = array_runs[array_runs.length - 1] - (total - runs);
     }
-
-    // let sum = array_runs.reduce((accumulator, currentValue) => {
-    //     return accumulator + currentValue
-    // },0);
-    // console.log(total, sum);
 
     return array_runs;
 }
