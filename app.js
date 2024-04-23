@@ -58,6 +58,9 @@ const handleRuns = (array_runs, time_run, time_rest, index) => {
     let timeForRun = (currentRun * time_run) + time_rest;
     let chaseTotal = array_runs.slice(0, index).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     
+    console.log(array_runs);
+    console.log(index, currentRun, timeForRun);
+
     elCurrentRun.textContent = currentRun;
     elMyChaseTotal.textContent = chaseTotal;
     
@@ -65,7 +68,7 @@ const handleRuns = (array_runs, time_run, time_rest, index) => {
 
     let run_timeout = setTimeout(() => {
         handleRuns(array_runs, time_run, time_rest, index + 1);
-        clearTimeout(run_timeout);
+        // clearTimeout(run_timeout);
     }, timeForRun * 1000);
 }
 // END handleRuns
