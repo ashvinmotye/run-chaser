@@ -9,7 +9,8 @@ const APP_DATA = {
     MAX_RUNS: 200,
     DIFF_RUNS: 0.125,
     TOTAL_RUNS: 0,
-    ARR_RUNS: []
+    ARR_RUNS: [],
+    AUDIO: new Audio('whistle.wav')
 };
 
 // METHODS
@@ -32,8 +33,7 @@ const initRunChaseApp = () => {
 
 // whistle
 const whistle = () => {
-    var audio = new Audio('whistle.wav');
-    audio.play();
+    APP_DATA.AUDIO.play();
 }
 // END whistle
 
