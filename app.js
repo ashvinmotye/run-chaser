@@ -8,11 +8,14 @@ const APP_DATA = {
     TIME_REST: 5,
     MAX_RUNS: 200,
     DIFF_RUNS: 0.125,
+    MAX_MULTIPLIER: 1.5,
     TOTAL_RUNS: 0,
     ARR_RUNS: [],
     AUDIO: new Audio('whistle.wav'),
     SPEECH: null,
-    VOICE: null
+    VOICE: null,
+    SESSION_COMPLETE: 'Good work! Session completed!',
+    COMPLETE_TEXT: 'COMPLETE!'
 };
 
 // METHODS
@@ -67,7 +70,8 @@ const handleRuns = (index) => {
     elMyChaseTotal.textContent = chaseTotal;
 
     if(chaseTotal == Number(document.querySelector('.chase').textContent)) {
-        elCurrentRun.textContent = 'COMPLETE!';
+        elCurrentRun.textContent = APP_DATA.COMPLETE_TEXT;
+        speak(APP_DATA.SESSION_COMPLETE);
         return;
     }
     
@@ -97,9 +101,34 @@ const generateRunsArray = () => {
         array_runs[array_runs.length - 1] = array_runs[array_runs.length - 1] - (total - APP_DATA.TOTAL_RUNS);
     }
 
-    APP_DATA.ARR_RUNS = array_runs;
+    APP_DATA.ARR_RUNS = limitRunsArray(array_runs);
 }
 // END generateRunsArray
+
+// limitRunsArray
+const limitRunsArray = (array_runs) => {
+    let max_array = [];
+    let temp_array = array_runs;
+    let min_length = Math.ceil(APP_DATA.TOTAL_RUNS / 6);
+    let max_length = Math.ceil(APP_DATA.MAX_MULTIPLIER * min_length);
+
+    if(temp_array.length > max_length) {
+        max_array = temp_array.slice(0, max_length);
+        let surplus = temp_array.slice(max_length).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+        while(surplus != 0) {
+            let randomIndex = generateRandomNumber(0, max_length);
+
+            if(max_array[randomIndex] != 6) {
+                max_array[randomIndex] = max_array[randomIndex] + 1;
+                surplus--;
+            }
+        }
+    }
+
+    return max_array;
+}
+// END limitRunsArray
 
 // generateRandomNumber
 const generateRandomNumber = (min, max) => {
