@@ -68,6 +68,7 @@ const initRunChaseApp = () => {
         handleRuns(0);
         event.target.disabled = true;
         document.querySelector('#inp-submit').disabled = true;
+        setScreenWakeLock();
     });
 } 
 // END initRunChaseApp
@@ -220,6 +221,34 @@ const initSpeech = () => {
     APP_DATA.SPEECH = speech;
 }
 // END initSpeech
+
+// setScreenWakeLock
+const setScreenWakeLock = () => {
+    let wakeLockObj = null;
+
+    if ("keepAwake" in screen) {
+        screen.keepAwake = !screen.keepAwake;
+    } else if ("wakeLock" in navigator) {
+        if (wakeLockObj) {
+            wakeLockObj.release();
+            wakeLockObj = null;
+        } else {
+            navigator.wakeLock
+            .request("screen")
+            .then((wakeLock) => {
+                wakeLockObj = wakeLock;
+                wakeLockObj.addEventListener("release", () => {
+                    wakeLockObj = null;
+                });
+                console.log('screen wake locked.');
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        }
+    }
+}
+// END setScreenWakeLock
 
 // EVENT LISTENERS
 document.addEventListener('DOMContentLoaded', init);
