@@ -19,7 +19,8 @@ const APP_DATA = {
     ENABLE_VOICE: true,
     VOICE_PITCH: 1.8,
     VOICE_RATE: 1.2,
-    RUN_DISTANCE: 0
+    RUN_DISTANCE: 0,
+    INTERVAL: null
 };
 
 // METHODS
@@ -33,6 +34,21 @@ const init = () => {
     initRunChaseApp();
 }
 // END init
+
+// handleCountdown
+const handleCountdown = (timeForRun) => {
+    if(APP_DATA.INTERVAL != null) {
+        clearInterval(APP_DATA.INTERVAL);
+    }
+
+    const elTimer = document.querySelector('.timer span');
+    elTimer.textContent = timeForRun;
+
+    APP_DATA.INTERVAL = setInterval(() => {
+        elTimer.textContent = Number(elTimer.textContent) - 1;
+    }, 1000);
+}
+// END handleCountdown
 
 // initTwitterLink
 const initTwitterLink = () => {
@@ -157,6 +173,7 @@ const handleRuns = (index) => {
     }
     
     whistleAndSpeak(currentRun);
+    handleCountdown(timeForRun);
 
     let run_timeout = setTimeout(() => {
         handleRuns(index + 1);

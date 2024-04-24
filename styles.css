@@ -267,10 +267,31 @@ body.active .settings {
     label {
         color: #ff84c3;
     }
+
+    .timer {
+        position: fixed;
+        top: 0;
+        font-size: 38em;
+        transform: translateX(31vw);
+        font-weight: 100;
+        color: rgba(31, 31, 31, 0.04);
+        z-index: -2;
+        pointer-events: none;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        letter-spacing: -0.15em;
+        font-family: "Fira Code", monospace;
+    }
 }
 
 @media screen and (max-width: 600px) {
     .runs {
         font-size: 5em;
+    }
+    .timer {
+        display: none;
     }
 }
