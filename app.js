@@ -16,7 +16,9 @@ const APP_DATA = {
     VOICE: null,
     SESSION_COMPLETE: 'Good work! Session completed!',
     COMPLETE_TEXT: 'COMPLETE!',
-    ENABLE_VOICE: true
+    ENABLE_VOICE: true,
+    VOICE_PITCH: 1.8,
+    VOICE_RATE: 1.2
 };
 
 // METHODS
@@ -188,6 +190,8 @@ const speak = (text) => {
 
     // set the voice to myVoice
     output.voice = APP_DATA.VOICE;
+    output.pitch = APP_DATA.VOICE_PITCH;
+    output.rate = APP_DATA.VOICE_RATE;
 
     // say the text
     APP_DATA.SPEECH.speak(output);
