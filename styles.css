@@ -8,6 +8,7 @@
     --background: #f9f9f9;
     --text: #1f1f1f;
     --pink: #e31a81;
+    --twitter-blue: #1d9bf0;
 }
 
 body {
@@ -160,6 +161,39 @@ button#lock-screen {
 
 button#lock-screen.show {
     bottom: 20px;
+}
+
+.x-share {
+    position: fixed;
+    right: calc(25% - 90px);
+    bottom: -60px;
+    width: 180px;
+    font-size: 12px;
+    padding: 6px 10px;
+    height: 34px;
+    background-color: #000;
+    transition: all 0.4s ease-in-out;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.x-share.show {
+    bottom: 20px;
+}
+
+.x-share svg {
+    width: 18px;
+}
+
+.x-share span {
+    display: block;
+    margin-left: 8px;
 }
 
 /* ANIMATION */

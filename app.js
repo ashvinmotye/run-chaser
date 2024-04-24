@@ -34,11 +34,23 @@ const init = () => {
 }
 // END init
 
+// initTwitterLink
+const initTwitterLink = () => {
+    let text = `Successfully completed ${APP_DATA.TOTAL_RUNS} on Run Chaser!`;
+    let url = 'https://ashvinmotye.github.io/run-chaser/';
+    let baseUrl = 'https://twitter.com/intent/tweet?';
+    let tweetUrl = `${baseUrl}text=${encodeURI(text)}&url=${encodeURI(url)}&original_referer=${encodeURI(url)}`;
+    document.querySelector('.x-share').setAttribute('href', tweetUrl);
+}
+// END initTwitterLink
+
+// initLockButton
 const initLockButton = () => {
     document.querySelector('#lock-screen').addEventListener('click', () => {
         setScreenWakeLock();
     });
 }
+// END initLockButton
 
 // displayTotalTimeAndDistance
 const displayTotalTimeAndDistance = () => {
@@ -97,6 +109,7 @@ const initRunChaseApp = () => {
     });
     displayTotalTimeAndDistance();
     initLockButton();
+    initTwitterLink();
 } 
 // END initRunChaseApp
 
