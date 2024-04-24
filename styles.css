@@ -116,15 +116,15 @@ body {
 body:before {
     content: '';
     display: block;
-    width: 100%;
+    width: 200%;
     height: 3px;
     background: var(--pink);
     position: fixed;
     top: 0;
     left: 0;
     transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 0.7s ease;
+    transform-origin: left;
+    transition: transform 2s ease;
 }
 
 body.locked:before {
@@ -143,6 +143,23 @@ body.locked:before {
 
 .display-distance.hidden {
     display: none;
+}
+
+/* ANIMATION */
+body, .settings, body:after {
+    transition: transform 0.4s ease-in-out;
+}
+
+body.active {
+    transform: translateX(-25%);
+}
+
+body.active:after {
+    transform: skewX(20deg) scale(1.6) translateX(-40%);
+}
+
+body.active .settings {
+    transform: translateX(-50%);
 }
 
 @media screen and (min-width: 601px) {
