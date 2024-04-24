@@ -243,6 +243,7 @@ const setScreenWakeLock = () => {
                 wakeLockObj = wakeLock;
                 wakeLockObj.addEventListener("release", () => {
                     wakeLockObj = null;
+                    document.querySelector('body').classList.remove('locked');
                 });
                 document.querySelector('body').classList.add('locked');
                 console.log('screen wake locked.');
