@@ -15,7 +15,7 @@ const APP_DATA = {
     SPEECH: null,
     VOICE: null,
     SESSION_COMPLETE: 'Good work! Session completed!',
-    COMPLETE_TEXT: 'COMPLETE!',
+    COMPLETE_TEXT: 'DONE!',
     ENABLE_VOICE: true,
     VOICE_PITCH: 1.8,
     VOICE_RATE: 1.2,
@@ -51,15 +51,18 @@ const handleCountdown = (timeForRun) => {
 }
 // END handleCountdown
 
-// initTwitterLink
-const initTwitterLink = () => {
-    let text = `Successfully completed ${APP_DATA.TOTAL_RUNS} on Run Chaser!`;
+// showTwitterShare
+const showTwitterShare = () => {
+    let text = `Successfully completed ${APP_DATA.TOTAL_RUNS} runs on Run Chaser!`;
     let url = 'https://ashvinmotye.github.io/run-chaser/';
     let baseUrl = 'https://twitter.com/intent/tweet?';
     let tweetUrl = `${baseUrl}text=${encodeURI(text)}&url=${encodeURI(url)}&original_referer=${encodeURI(url)}`;
-    document.querySelector('.x-share').setAttribute('href', tweetUrl);
+    
+    let elTweetLink = document.querySelector('.x-share');
+    elTweetLink.setAttribute('href', tweetUrl);
+    elTweetLink.classList.add('show');
 }
-// END initTwitterLink
+// END showTwitterShare
 
 // initLockButton
 const initLockButton = () => {
@@ -129,7 +132,6 @@ const initRunChaseApp = () => {
     });
     displayTotalTimeAndDistance();
     initLockButton();
-    initTwitterLink();
 } 
 // END initRunChaseApp
 
@@ -175,6 +177,7 @@ const handleRuns = (index) => {
         document.querySelector('.timer span').textContent = '';
         elCurrentRun.textContent = APP_DATA.COMPLETE_TEXT;
         speak(APP_DATA.SESSION_COMPLETE);
+        showTwitterShare();
         return;
     }
     
