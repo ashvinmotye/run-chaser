@@ -34,6 +34,12 @@ const init = () => {
 }
 // END init
 
+const initLockButton = () => {
+    document.querySelector('#lock-screen').addEventListener('click', () => {
+        setScreenWakeLock();
+    });
+}
+
 // displayTotalTimeAndDistance
 const displayTotalTimeAndDistance = () => {
     document.querySelector('.display-time span').textContent = Math.ceil((APP_DATA.TOTAL_RUNS * APP_DATA.TIME_RUN + (APP_DATA.ARR_RUNS.length * APP_DATA.TIME_REST)) / 60);
@@ -90,6 +96,7 @@ const initRunChaseApp = () => {
         document.querySelector('body').classList.add('active');
     });
     displayTotalTimeAndDistance();
+    initLockButton();
 } 
 // END initRunChaseApp
 
@@ -266,8 +273,11 @@ const setScreenWakeLock = () => {
                 wakeLockObj.addEventListener("release", () => {
                     wakeLockObj = null;
                     document.querySelector('body').classList.remove('locked');
+                    document.querySelector('#lock-screen').classList.add('show');
+                    console.log('screen wake lock released.');
                 });
                 document.querySelector('body').classList.add('locked');
+                document.querySelector('#lock-screen').classList.remove('show');
                 console.log('screen wake locked.');
             })
             .catch((err) => {

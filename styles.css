@@ -145,6 +145,23 @@ body.locked:before {
     display: none;
 }
 
+button#lock-screen {
+    position: fixed;
+    right: calc(25% - 55px);
+    bottom: -60px;
+    width: 110px;
+    font-size: 12px;
+    padding: 6px 10px;
+    height: auto;
+    background-color: #12166d;
+    transition: all 0.4s ease-in-out;
+    text-align: center;
+}
+
+button#lock-screen.show {
+    bottom: 20px;
+}
+
 /* ANIMATION */
 body, .settings, body:after {
     transition: transform 0.4s ease-in-out;
@@ -163,6 +180,10 @@ body.active .settings {
 }
 
 @media screen and (min-width: 601px) {
+    body {
+        overflow: hidden;
+    }
+
     .container {
         display: flex;
         flex-direction: row-reverse;
