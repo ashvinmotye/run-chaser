@@ -145,6 +145,10 @@ const generateRunsArray = () => {
     }
 
     APP_DATA.ARR_RUNS = limitRunsArray(array_runs);
+
+    if(APP_DATA.ARR_RUNS.length == 0) {
+        generateRunsArray();
+    }
 }
 // END generateRunsArray
 
