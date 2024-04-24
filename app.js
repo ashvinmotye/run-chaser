@@ -18,7 +18,8 @@ const APP_DATA = {
     COMPLETE_TEXT: 'COMPLETE!',
     ENABLE_VOICE: true,
     VOICE_PITCH: 1.8,
-    VOICE_RATE: 1.2
+    VOICE_RATE: 1.2,
+    RUN_DISTANCE: 0
 };
 
 // METHODS
@@ -33,6 +34,18 @@ const init = () => {
 }
 // END init
 
+// displayTotalTimeAndDistance
+const displayTotalTimeAndDistance = () => {
+    document.querySelector('.display-time span').textContent = Math.ceil((APP_DATA.TOTAL_RUNS * APP_DATA.TIME_RUN + (APP_DATA.ARR_RUNS.length * APP_DATA.TIME_REST)) / 60);
+
+    let distance = APP_DATA.RUN_DISTANCE * APP_DATA.TOTAL_RUNS;
+    if(distance > 0) {
+        document.querySelector('.display-distance span').textContent = distance / 1000;
+        document.querySelector('.display-distance').classList.remove('hidden');
+    }
+}
+// END displayTotalTimeAndDistance
+
 // initSettingsForm
 const initSettingsForm = () => {
     const elForm = document.querySelector('#form-settings');
@@ -40,6 +53,7 @@ const initSettingsForm = () => {
     const elTimeRun = document.querySelector('#inp-time-run');
     const elTimeRest = document.querySelector('#inp-time-rest');
     const elEnableVoice = document.querySelector('#inp-enable-voice');
+    const elDistancePerRun = document.querySelector('#inp-distance-per-run');
 
     // Initialise values into form elements
     elRunsTotal.value = APP_DATA.TOTAL_RUNS;
@@ -58,8 +72,10 @@ const initSettingsForm = () => {
         APP_DATA.TIME_RUN = Number(elTimeRun.value);
         APP_DATA.TIME_REST = Number(elTimeRest.value);
         APP_DATA.ENABLE_VOICE = elEnableVoice.checked;
+        APP_DATA.RUN_DISTANCE = Number(elDistancePerRun.value);
 
         generateRunsArray();
+        displayTotalTimeAndDistance();
     });
 }
 // END initSettingsForm
@@ -72,6 +88,7 @@ const initRunChaseApp = () => {
         document.querySelector('#inp-submit').disabled = true;
         setScreenWakeLock();
     });
+    displayTotalTimeAndDistance();ß
 } 
 // END initRunChaseApp
 
