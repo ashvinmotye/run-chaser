@@ -104,6 +104,10 @@ span.ui-label {
     justify-content: center;
 }
 
+.ui-number {
+    font-weight: 900;
+}
+
 @media screen and (max-width: 600px) {
     .runs {
         font-size: 5em;
