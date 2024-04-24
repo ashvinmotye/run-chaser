@@ -196,26 +196,26 @@ button#lock-screen.show {
     margin-left: 8px;
 }
 
-/* ANIMATION */
-body, .settings, body:after {
-    transition: transform 0.4s ease-in-out;
-}
-
-body.active {
-    transform: translateX(-25%);
-}
-
-body.active:after {
-    transform: skewX(20deg) scale(1.6) translateX(-40%);
-}
-
-body.active .settings {
-    transform: translateX(-50%);
-}
-
 @media screen and (min-width: 601px) {
     body {
         overflow: hidden;
+    }
+
+    /* ANIMATION */
+    body, .settings, body:after {
+        transition: transform 0.4s ease-in-out;
+    }
+
+    body.active {
+        transform: translateX(-25%);
+    }
+
+    body.active:after {
+        transform: skewX(20deg) scale(1.6) translateX(-40%);
+    }
+
+    body.active .settings {
+        transform: translateX(-50%);
     }
 
     .container {
@@ -292,6 +292,11 @@ body.active .settings {
         font-size: 5em;
     }
     .timer {
-        display: none;
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-size: 3em;
+        font-family: 'Fira Code', monospace;
+        color: rgba(31, 31, 31, 0.1);
     }
 }

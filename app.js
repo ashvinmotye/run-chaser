@@ -20,7 +20,8 @@ const APP_DATA = {
     VOICE_PITCH: 1.8,
     VOICE_RATE: 1.2,
     RUN_DISTANCE: 0,
-    INTERVAL: null
+    INTERVAL: null,
+    SHOW_TIMER: true
 };
 
 // METHODS
@@ -88,12 +89,14 @@ const initSettingsForm = () => {
     const elTimeRest = document.querySelector('#inp-time-rest');
     const elEnableVoice = document.querySelector('#inp-enable-voice');
     const elDistancePerRun = document.querySelector('#inp-distance-per-run');
+    const elShowTimer = document.querySelector('#inp-enable-timer');
 
     // Initialise values into form elements
     elRunsTotal.value = APP_DATA.TOTAL_RUNS;
     elTimeRun.value = APP_DATA.TIME_RUN;
     elTimeRest.value = APP_DATA.TIME_REST;
     elEnableVoice.checked = APP_DATA.ENABLE_VOICE;
+    elShowTimer.checked = APP_DATA.SHOW_TIMER;
 
     // Submit form action
     elForm.addEventListener('submit', (event) => {
@@ -107,6 +110,7 @@ const initSettingsForm = () => {
         APP_DATA.TIME_REST = Number(elTimeRest.value);
         APP_DATA.ENABLE_VOICE = elEnableVoice.checked;
         APP_DATA.RUN_DISTANCE = Number(elDistancePerRun.value);
+        APP_DATA.SHOW_TIMER = elShowTimer.checked;
 
         generateRunsArray();
         displayTotalTimeAndDistance();
@@ -167,13 +171,15 @@ const handleRuns = (index) => {
     elMyChaseTotal.textContent = chaseTotal;
 
     if(chaseTotal == Number(document.querySelector('.chase').textContent)) {
+        clearInterval(APP_DATA.INTERVAL);
+        document.querySelector('.timer span').textContent = '';
         elCurrentRun.textContent = APP_DATA.COMPLETE_TEXT;
         speak(APP_DATA.SESSION_COMPLETE);
         return;
     }
     
     whistleAndSpeak(currentRun);
-    handleCountdown(timeForRun);
+    APP_DATA.SHOW_TIMER && handleCountdown(timeForRun);
 
     let run_timeout = setTimeout(() => {
         handleRuns(index + 1);
