@@ -88,7 +88,7 @@ const initRunChaseApp = () => {
         document.querySelector('#inp-submit').disabled = true;
         setScreenWakeLock();
     });
-    displayTotalTimeAndDistance();ß
+    displayTotalTimeAndDistance();
 } 
 // END initRunChaseApp
 
