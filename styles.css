@@ -42,7 +42,7 @@ button:disabled {
 
 .form-group {
     width: 250px;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 form {
@@ -129,6 +129,58 @@ body:before {
 
 body.locked:before {
     transform: scaleX(1);
+}
+
+@media screen and (min-width: 601px) {
+    .container {
+        display: flex;
+        flex-direction: row-reverse;
+        height: 100vh;
+    }
+    
+    .runs {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+    }
+    
+    .settings {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+    }
+    
+    body:after {
+        content: '';
+        display: block;
+        width: 50%;
+        height: 100%;
+        background-color: var(--pink);
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        transform: skewX(20deg) scale(1.6) translateX(-20%);
+    }
+    
+    input[type=number] {
+        background: var(--pink);
+        border: none;
+        border-bottom: 1px solid #ff84c3;
+        color: #ffebf5;
+    }
+    
+    input[type=number]:focus {
+        outline: none;
+    }
+    
+    label {
+        color: #ff84c3;
+    }
 }
 
 @media screen and (max-width: 600px) {
