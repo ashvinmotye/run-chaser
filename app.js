@@ -21,7 +21,8 @@ const APP_DATA = {
     VOICE_RATE: 1.2,
     RUN_DISTANCE: 0,
     INTERVAL: null,
-    SHOW_TIMER: true
+    SHOW_TIMER: true,
+    JS_CONFETTI: null
 };
 
 // METHODS
@@ -35,6 +36,24 @@ const init = () => {
     initRunChaseApp();
 }
 // END init
+
+// celebrate
+const celebrate = () => {
+    if(APP_DATA.JS_CONFETTI == null) {
+        APP_DATA.JS_CONFETTI = new JSConfetti();
+    }
+
+    const confetti = APP_DATA.JS_CONFETTI;
+    const config = {
+        confettiColors: ['#e31a81', '#f292be']
+    };
+
+    confetti.addConfetti(config);
+    setTimeout(() => {
+        confetti.addConfetti(config);
+    }, 600);
+}
+// END celebrate
 
 // handleCountdown
 const handleCountdown = (timeForRun) => {
@@ -173,6 +192,7 @@ const handleRuns = (index) => {
     elMyChaseTotal.textContent = chaseTotal;
 
     if(chaseTotal == Number(document.querySelector('.chase').textContent)) {
+        celebrate();
         clearInterval(APP_DATA.INTERVAL);
         document.querySelector('.timer span').textContent = '';
         elCurrentRun.textContent = APP_DATA.COMPLETE_TEXT;
