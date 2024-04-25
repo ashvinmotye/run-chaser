@@ -207,6 +207,29 @@ canvas {
     transform: translateX(25%);
 }
 
+button#start-run-chase {
+    position: relative;
+    --width: 0;
+}
+
+button#start-run-chase:after,
+button#start-run-chase:before {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: #f292be;
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    transition: all 1s ease-in-out;
+}
+
+button#start-run-chase:after {
+    background: var(--pink);
+    width: var(--width);
+}
+
 @media screen and (min-width: 601px) {
     body {
         overflow: hidden;

@@ -180,6 +180,7 @@ const showChaseTotal = () => {
 const handleRuns = (index) => {
     const elCurrentRun = document.querySelector('.current-run');
     const elMyChaseTotal = document.querySelector('.my-chase');
+    const elStartButton = document.querySelector('#start-run-chase');
 
     let currentRun = APP_DATA.ARR_RUNS[index];
     let timeForRun = (currentRun * APP_DATA.TIME_RUN) + APP_DATA.TIME_REST;
@@ -190,6 +191,7 @@ const handleRuns = (index) => {
 
     elCurrentRun.textContent = currentRun;
     elMyChaseTotal.textContent = chaseTotal;
+    elStartButton.setAttribute('style', `--width: ${(chaseTotal/APP_DATA.TOTAL_RUNS) * 100}%`);
 
     if(chaseTotal == Number(document.querySelector('.chase').textContent)) {
         celebrate();
