@@ -326,12 +326,16 @@ button#start-run-chase:after {
         font-size: 5em;
     }
     .timer {
-        position: absolute;
-        top: 0;
-        right: 10px;
-        font-size: 3em;
-        font-family: 'Fira Code', monospace;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(0%);
+        font-size: 115vw;
+        line-height: 1;
+        font-weight: 900;
+        z-index: -1;
         color: rgba(31, 31, 31, 0.1);
+        font-family: "Fira Code", monospace;
     }
     canvas {
         transform: translateX(0);
@@ -345,5 +349,52 @@ button#start-run-chase:after {
     button#lock-screen {
         right: 50%;
         transform: translateX(50%);
+    }
+
+    /* ANIMATION */
+    .settings, body:after, .runs {
+        transition: transform 0.4s ease-in-out;
+    }
+
+    body.active {
+        overflow: hidden;
+    }
+
+    body:after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: var(--pink);
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        z-index: -1;
+        transform: skewX(64deg) scaleX(3);
+        transform-origin: bottom;
+        transition: transform 0.4s ease-in-out;
+    }
+    
+    body.active:after {
+        transform: skewX(64deg) scaleX(3) translateX(-100%);
+    }
+
+    body.active .settings {
+        transform: translateY(100%);
+    }
+
+    body.active .runs {
+        transform: translateY(20%);
+    }
+
+    body.active .runs {
+        position: fixed;
+        width: 100%;
+        
+    }
+    
+    body.active .settings {
+        position: fixed;
+        bottom: -100%;
     }
 }
