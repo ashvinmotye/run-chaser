@@ -45,6 +45,7 @@ const init = () => {
 }
 // END init
 
+// getDateAtMidnight
 const getDateAtMidnight = (date) => {
     let _date = new Date(date);
     return new Date(
@@ -53,7 +54,9 @@ const getDateAtMidnight = (date) => {
         _date.getDate()
     );
 }
+// END getDateAtMidnight
 
+// handleStreak
 const handleStreak = () => {
     const toInitStreak = localStorage.getItem('runChaser') == null;
     let runChaserObj;
@@ -89,6 +92,7 @@ const handleStreak = () => {
     APP_DATA.STREAK_OBJ = runChaserObj;
     localStorage.setItem('runChaser', JSON.stringify(runChaserObj));
 }
+// END handleStreak
 
 // celebrate
 const celebrate = () => {
