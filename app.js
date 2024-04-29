@@ -22,7 +22,15 @@ const APP_DATA = {
     RUN_DISTANCE: 0,
     INTERVAL: null,
     SHOW_TIMER: true,
-    JS_CONFETTI: null
+    JS_CONFETTI: null,
+    STREAK_OBJ: {
+        host: window.location.hostname,
+        lastDate: new Date(2024, 3, 26),
+        currentStreakCount: 0,
+        currentStreakRuns: 0,
+        totalRuns: 0,
+        bestStreakRuns: 0
+    }
 };
 
 // METHODS
@@ -36,6 +44,51 @@ const init = () => {
     initRunChaseApp();
 }
 // END init
+
+const getDateAtMidnight = (date) => {
+    let _date = new Date(date);
+    return new Date(
+        _date.getFullYear(),
+        _date.getMonth(),
+        _date.getDate()
+    );
+}
+
+const handleStreak = () => {
+    const toInitStreak = localStorage.getItem('runChaser') == null;
+    let runChaserObj;
+
+    if(toInitStreak) {
+        runChaserObj = APP_DATA.STREAK_OBJ;
+        runChaserObj.currentStreakRuns = APP_DATA.TOTAL_RUNS;
+        runChaserObj.currentStreakCount = runChaserObj.currentStreakCount + 1;
+        runChaserObj.totalRuns = APP_DATA.TOTAL_RUNS;
+        runChaserObj.bestStreakRuns = APP_DATA.TOTAL_RUNS;
+        runChaserObj.lastDate = getDateAtMidnight(new Date());
+    } else {
+        runChaserObj = JSON.parse(localStorage.getItem('runChaser'));
+        console.table(runChaserObj);
+        runChaserObj.totalRuns = runChaserObj.totalRuns + APP_DATA.TOTAL_RUNS;
+
+        let dateDiff = Math.abs(getDateAtMidnight(new Date()) - getDateAtMidnight(new Date(runChaserObj.lastDate)));
+        let diffDays = Math.ceil(dateDiff / (1000 * 60 * 60 * 24));
+
+        if(diffDays == 0) {
+            runChaserObj.currentStreakRuns = runChaserObj.currentStreakRuns + APP_DATA.TOTAL_RUNS;
+        }
+        else if(diffDays == 1) {
+            runChaserObj.currentStreakCount = runChaserObj.currentStreakCount + 1;
+            runChaserObj.currentStreakRuns = runChaserObj.currentStreakRuns + APP_DATA.TOTAL_RUNS;
+        } else {
+            runChaserObj.currentStreakCount = 0;
+            runChaserObj.currentStreakRuns = APP_DATA.TOTAL_RUNS;
+        }
+        runChaserObj.bestStreakRuns = runChaserObj.bestStreakRuns < runChaserObj.currentStreakRuns ? runChaserObj.currentStreakRuns : runChaserObj.bestStreakRuns;
+    }
+
+    APP_DATA.STREAK_OBJ = runChaserObj;
+    localStorage.setItem('runChaser', JSON.stringify(runChaserObj));
+}
 
 // celebrate
 const celebrate = () => {
@@ -199,6 +252,7 @@ const handleRuns = (index) => {
         document.querySelector('.timer span').textContent = '';
         elCurrentRun.textContent = APP_DATA.COMPLETE_TEXT;
         speak(APP_DATA.SESSION_COMPLETE);
+        handleStreak();
         showTwitterShare();
         return;
     }
