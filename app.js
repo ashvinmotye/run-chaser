@@ -125,10 +125,10 @@ const handleCountdown = (timeForRun) => {
 
 // showTwitterShare
 const showTwitterShare = () => {
-    let text = `Successfully completed ${APP_DATA.TOTAL_RUNS} runs on Run Chaser!`;
+    let text = `Successfully completed ${APP_DATA.TOTAL_RUNS} runs on Run Chaser! Current streak of ${APP_DATA.STREAK_OBJ.bestStreakRuns} runs with a total of ${APP_DATA.STREAK_OBJ.totalRuns} completed so far!`;
     let url = 'https://ashvinmotye.github.io/run-chaser/';
     let baseUrl = 'https://twitter.com/intent/tweet?';
-    let tweetUrl = `${baseUrl}text=${encodeURI(text)}&url=${encodeURI(url)}&original_referer=${encodeURI(url)}`;
+    let tweetUrl = `${baseUrl}text=${encodeURI(text)}&hashtags=RunChaser&url=${encodeURI(url)}&original_referer=${encodeURI(url)}`;
     
     let elTweetLink = document.querySelector('.x-share');
     elTweetLink.setAttribute('href', tweetUrl);
