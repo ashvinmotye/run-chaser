@@ -42,8 +42,34 @@ const init = () => {
     generateRunsArray();
     initSettingsForm();
     initRunChaseApp();
+    renderStreak();
 }
 // END init
+
+// toggleStreak
+const toggleStreak = () => {
+    document.querySelector('.streak').classList.toggle('hide');
+}
+// END toggleStreak
+
+// renderStreak
+const renderStreak = () => {
+    const elStreaks = document.querySelectorAll('.streak .streak-number');
+
+    const hasStreak = localStorage.getItem('runChaser') != null;
+
+    if(!hasStreak) {
+        return;
+    }
+
+    const { currentStreakCount, currentStreakRuns, bestStreakRuns, totalRuns } = JSON.parse(localStorage.getItem('runChaser'));
+    const streakArray = [currentStreakCount, currentStreakRuns, bestStreakRuns, totalRuns];
+
+    elStreaks.forEach((el, index) => {
+        el.textContent = streakArray[index];
+    });
+}
+// END renderStreak
 
 // getDateAtMidnight
 const getDateAtMidnight = (date) => {
@@ -91,6 +117,7 @@ const handleStreak = () => {
 
     APP_DATA.STREAK_OBJ = runChaserObj;
     localStorage.setItem('runChaser', JSON.stringify(runChaserObj));
+    renderStreak();
 }
 // END handleStreak
 
@@ -129,7 +156,9 @@ const handleCountdown = (timeForRun) => {
 
 // showTwitterShare
 const showTwitterShare = () => {
-    let text = `Successfully completed ${APP_DATA.TOTAL_RUNS} runs on Run Chaser! Current streak of ${APP_DATA.STREAK_OBJ.bestStreakRuns} runs with a total of ${APP_DATA.STREAK_OBJ.totalRuns} completed so far!`;
+    let text = `Successfully completed ${APP_DATA.TOTAL_RUNS} runs on Run Chaser!
+Current streak of ${APP_DATA.STREAK_OBJ.bestStreakRuns} runs with a total of ${APP_DATA.STREAK_OBJ.totalRuns} completed so far!
+`;
     let url = 'https://ashvinmotye.github.io/run-chaser/';
     let baseUrl = 'https://twitter.com/intent/tweet?';
     let tweetUrl = `${baseUrl}text=${encodeURI(text)}&hashtags=RunChaser&url=${encodeURI(url)}&original_referer=${encodeURI(url)}`;
@@ -205,6 +234,7 @@ const initRunChaseApp = () => {
         document.querySelector('#inp-submit').disabled = true;
         setScreenWakeLock();
         document.querySelector('body').classList.add('active');
+        toggleStreak();
     });
     displayTotalTimeAndDistance();
     initLockButton();
@@ -258,6 +288,7 @@ const handleRuns = (index) => {
         speak(APP_DATA.SESSION_COMPLETE);
         handleStreak();
         showTwitterShare();
+        toggleStreak();
         return;
     }
     
