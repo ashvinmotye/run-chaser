@@ -230,6 +230,36 @@ button#start-run-chase:after {
     width: var(--width);
 }
 
+.streak {
+    display: flex;
+    justify-content: center;
+    margin-top: 36px;
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+}
+
+.streak.hide {
+    opacity: 0;
+}
+
+.streak p {
+    display: flex;
+    flex-direction: column;
+    margin: 0 8px;
+    font-size: 12px;
+}
+
+span.streak-number {
+    font-size: 1.5em;
+    font-weight: bolder;
+    font-family: 'Fira Code';
+    color: #12166d;
+}
+
+span.streak-label {
+    color: #a0a0a0;
+}
+
 @media screen and (min-width: 601px) {
     body {
         overflow: hidden;

@@ -22,7 +22,16 @@ const APP_DATA = {
     RUN_DISTANCE: 0,
     INTERVAL: null,
     SHOW_TIMER: true,
-    JS_CONFETTI: null
+    JS_CONFETTI: null,
+    STREAK_OBJ: {
+        host: window.location.hostname,
+        startedDate: new Date(),
+        lastDate: new Date(),
+        currentStreakCount: 0,
+        currentStreakRuns: 0,
+        totalRuns: 0,
+        bestStreakRuns: 0
+    }
 };
 
 // METHODS
@@ -34,8 +43,86 @@ const init = () => {
     generateRunsArray();
     initSettingsForm();
     initRunChaseApp();
+    renderStreak();
 }
 // END init
+
+// toggleStreak
+const toggleStreak = () => {
+    document.querySelector('.streak').classList.toggle('hide');
+}
+// END toggleStreak
+
+// renderStreak
+const renderStreak = () => {
+    const elStreaks = document.querySelectorAll('.streak .streak-number');
+
+    const hasStreak = localStorage.getItem('runChaser') != null;
+
+    if(!hasStreak) {
+        return;
+    }
+
+    const { currentStreakCount, currentStreakRuns, bestStreakRuns, totalRuns } = JSON.parse(localStorage.getItem('runChaser'));
+    const streakArray = [currentStreakCount, currentStreakRuns, bestStreakRuns, totalRuns];
+
+    elStreaks.forEach((el, index) => {
+        el.textContent = streakArray[index];
+    });
+}
+// END renderStreak
+
+// getDateAtMidnight
+const getDateAtMidnight = (date) => {
+    let _date = new Date(date);
+    return new Date(
+        _date.getFullYear(),
+        _date.getMonth(),
+        _date.getDate()
+    );
+}
+// END getDateAtMidnight
+
+// handleStreak
+const handleStreak = () => {
+    const toInitStreak = localStorage.getItem('runChaser') == null;
+    let runChaserObj;
+
+    if(toInitStreak) {
+        runChaserObj = APP_DATA.STREAK_OBJ;
+        runChaserObj.currentStreakRuns = APP_DATA.TOTAL_RUNS;
+        runChaserObj.currentStreakCount = runChaserObj.currentStreakCount + 1;
+        runChaserObj.totalRuns = APP_DATA.TOTAL_RUNS;
+        runChaserObj.bestStreakRuns = APP_DATA.TOTAL_RUNS;
+        runChaserObj.lastDate = getDateAtMidnight(new Date());
+        runChaserObj.startedDate = getDateAtMidnight(new Date());
+    } else {
+        runChaserObj = JSON.parse(localStorage.getItem('runChaser'));
+        console.table(runChaserObj);
+        runChaserObj.totalRuns = runChaserObj.totalRuns + APP_DATA.TOTAL_RUNS;
+
+        let dateDiff = Math.abs(getDateAtMidnight(new Date()) - getDateAtMidnight(new Date(runChaserObj.lastDate)));
+        let diffDays = Math.ceil(dateDiff / (1000 * 60 * 60 * 24));
+
+        if(diffDays == 0) {
+            runChaserObj.currentStreakRuns = runChaserObj.currentStreakRuns + APP_DATA.TOTAL_RUNS;
+        }
+        else if(diffDays == 1) {
+            runChaserObj.currentStreakCount = runChaserObj.currentStreakCount + 1;
+            runChaserObj.currentStreakRuns = runChaserObj.currentStreakRuns + APP_DATA.TOTAL_RUNS;
+        } else {
+            runChaserObj.currentStreakCount = 0;
+            runChaserObj.currentStreakRuns = APP_DATA.TOTAL_RUNS;
+            runChaserObj.lastDate = getDateAtMidnight(new Date());
+        }
+        runChaserObj.bestStreakRuns = runChaserObj.bestStreakRuns < runChaserObj.currentStreakRuns ? runChaserObj.currentStreakRuns : runChaserObj.bestStreakRuns;
+    }
+
+    APP_DATA.STREAK_OBJ = runChaserObj;
+    localStorage.setItem('runChaser', JSON.stringify(runChaserObj));
+    renderStreak();
+}
+// END handleStreak
 
 // celebrate
 const celebrate = () => {
@@ -72,10 +159,12 @@ const handleCountdown = (timeForRun) => {
 
 // showTwitterShare
 const showTwitterShare = () => {
-    let text = `Successfully completed ${APP_DATA.TOTAL_RUNS} runs on Run Chaser!`;
+    let text = `Successfully completed ${APP_DATA.TOTAL_RUNS} runs on Run Chaser!
+Current streak of ${APP_DATA.STREAK_OBJ.bestStreakRuns} runs with a total of ${APP_DATA.STREAK_OBJ.totalRuns} completed so far!
+`;
     let url = 'https://ashvinmotye.github.io/run-chaser/';
     let baseUrl = 'https://twitter.com/intent/tweet?';
-    let tweetUrl = `${baseUrl}text=${encodeURI(text)}&url=${encodeURI(url)}&original_referer=${encodeURI(url)}`;
+    let tweetUrl = `${baseUrl}text=${encodeURI(text)}&hashtags=RunChaser&url=${encodeURI(url)}&original_referer=${encodeURI(url)}`;
     
     let elTweetLink = document.querySelector('.x-share');
     elTweetLink.setAttribute('href', tweetUrl);
@@ -148,6 +237,7 @@ const initRunChaseApp = () => {
         document.querySelector('#inp-submit').disabled = true;
         setScreenWakeLock();
         document.querySelector('body').classList.add('active');
+        toggleStreak();
     });
     displayTotalTimeAndDistance();
     initLockButton();
@@ -199,7 +289,9 @@ const handleRuns = (index) => {
         document.querySelector('.timer span').textContent = '';
         elCurrentRun.textContent = APP_DATA.COMPLETE_TEXT;
         speak(APP_DATA.SESSION_COMPLETE);
+        handleStreak();
         showTwitterShare();
+        toggleStreak();
         return;
     }
     
