@@ -25,7 +25,8 @@ const APP_DATA = {
     JS_CONFETTI: null,
     STREAK_OBJ: {
         host: window.location.hostname,
-        lastDate: new Date(2024, 3, 26),
+        startedDate: new Date(),
+        lastDate: new Date(),
         currentStreakCount: 0,
         currentStreakRuns: 0,
         totalRuns: 0,
@@ -94,6 +95,7 @@ const handleStreak = () => {
         runChaserObj.totalRuns = APP_DATA.TOTAL_RUNS;
         runChaserObj.bestStreakRuns = APP_DATA.TOTAL_RUNS;
         runChaserObj.lastDate = getDateAtMidnight(new Date());
+        runChaserObj.startedDate = getDateAtMidnight(new Date());
     } else {
         runChaserObj = JSON.parse(localStorage.getItem('runChaser'));
         console.table(runChaserObj);
@@ -111,6 +113,7 @@ const handleStreak = () => {
         } else {
             runChaserObj.currentStreakCount = 0;
             runChaserObj.currentStreakRuns = APP_DATA.TOTAL_RUNS;
+            runChaserObj.lastDate = getDateAtMidnight(new Date());
         }
         runChaserObj.bestStreakRuns = runChaserObj.bestStreakRuns < runChaserObj.currentStreakRuns ? runChaserObj.currentStreakRuns : runChaserObj.bestStreakRuns;
     }
