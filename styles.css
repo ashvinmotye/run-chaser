@@ -163,7 +163,8 @@ button#lock-screen.show {
     bottom: 20px;
 }
 
-.x-share {
+.x-share,
+button#restart {
     position: fixed;
     right: calc(25% - 90px);
     bottom: -60px;
@@ -183,8 +184,17 @@ button#lock-screen.show {
     font-weight: 800;
 }
 
+button#restart {
+    background-color: #12166d;
+    font-family: 'Nunito', sans-serif;
+}
+
 .x-share.show {
     bottom: 20px;
+}
+
+button#restart.show {
+    bottom: 60px;
 }
 
 .x-share svg {
@@ -371,7 +381,8 @@ span.streak-label {
         transform: translateX(0);
     }
     
-    .x-share {
+    .x-share,
+    button#restart {
         right: 50%;
         transform: translateX(50%);
     }

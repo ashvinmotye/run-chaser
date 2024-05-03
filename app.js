@@ -169,6 +169,12 @@ Current streak of ${APP_DATA.STREAK_OBJ.bestStreakRuns} runs with a total of ${A
     let elTweetLink = document.querySelector('.x-share');
     elTweetLink.setAttribute('href', tweetUrl);
     elTweetLink.classList.add('show');
+
+    let restartBtn = document.querySelector('#restart');
+    restartBtn.addEventListener('click', () => {
+        window.location.reload();
+    });
+    restartBtn.classList.add('show');
 }
 // END showTwitterShare
 
