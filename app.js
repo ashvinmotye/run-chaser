@@ -44,8 +44,21 @@ const init = () => {
     initSettingsForm();
     initRunChaseApp();
     renderStreak();
+    initHowTo();
 }
 // END init
+
+// initHowTo
+const initHowTo = () => {
+    document.querySelector('#how-to-btn').addEventListener('click', () => {
+        document.querySelector('.how-to-popup').classList.remove('hide');
+    });
+
+    document.querySelector('.close').addEventListener('click', () => {
+        document.querySelector('.how-to-popup').classList.add('hide');
+    });
+}
+// END initHowTo
 
 // toggleStreak
 const toggleStreak = () => {

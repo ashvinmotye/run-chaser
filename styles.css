@@ -54,6 +54,8 @@ form {
 
 .settings {
     padding: 20px 30px 60px;
+    display: flex;
+    flex-direction: column;
 }
 
 input:not([type=checkbox]) {
@@ -270,6 +272,65 @@ span.streak-label {
     color: #a0a0a0;
 }
 
+.how-to-popup {
+    position: fixed;
+    width: 80%;
+    max-width: 600px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #f9f9f9;
+    padding: 50px 20px;
+    max-height: 90vh;
+    border: 2px solid #12166d;
+    overflow: scroll;
+}
+
+.how-to-popup.hide {
+    display: none;
+}
+
+.how-to-popup p {
+    margin-bottom: 12px;
+}
+
+p.disclaimer {
+    font-size: 7px;
+    font-style: italic;
+    margin-bottom: 0;
+    color: #a4a4a4;
+}
+
+.close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #12166d;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #fff;
+    cursor: default;
+}
+
+button#how-to-btn {
+    text-align: center;
+    height: auto;
+    font-size: 12px;
+    padding: 8px 16px;
+    margin-top: 36px;
+    position: relative;
+    width: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    text-decoration: underline;
+    color: #12166d;
+    font-size: 12px;
+}
+
 @media screen and (min-width: 601px) {
     body {
         overflow: hidden;
@@ -437,5 +498,9 @@ span.streak-label {
     body.active .settings {
         position: fixed;
         bottom: -100%;
+    }
+
+    .how-to-popup {
+        width: calc(100vw - 40px);
     }
 }
