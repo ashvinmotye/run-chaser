@@ -442,12 +442,6 @@ button#how-to-btn {
         transform: translateX(0);
     }
     
-    .x-share,
-    button#restart {
-        right: 50%;
-        transform: translateX(50%);
-    }
-    
     button#lock-screen {
         right: 50%;
         transform: translateX(50%);
@@ -502,5 +496,19 @@ button#how-to-btn {
 
     .how-to-popup {
         width: calc(100vw - 40px);
+    }
+
+    button#restart {
+        left: 30px;
+        width: calc(50% - 40px);
+    }
+
+    button#restart.show {
+        bottom: 20px;
+    }
+
+    a.x-share {
+        right: 30px;
+        width: calc(50% - 40px);
     }
 }
