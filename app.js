@@ -173,7 +173,7 @@ const handleCountdown = (timeForRun) => {
 // showTwitterShare
 const showTwitterShare = () => {
     let text = `Successfully completed ${APP_DATA.TOTAL_RUNS} runs on Run Chaser!
-Current streak of ${APP_DATA.STREAK_OBJ.bestStreakRuns} runs with a total of ${APP_DATA.STREAK_OBJ.totalRuns} completed so far!
+Current streak of ${APP_DATA.STREAK_OBJ.currentStreakRuns} runs with a total of ${APP_DATA.STREAK_OBJ.totalRuns} completed so far! Best streak of ${APP_DATA.STREAK_OBJ.bestStreakRuns} runs.
 `;
     let url = 'https://ashvinmotye.github.io/run-chaser/';
     let baseUrl = 'https://twitter.com/intent/tweet?';
